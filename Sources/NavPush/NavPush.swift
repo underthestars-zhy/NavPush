@@ -3,13 +3,19 @@ import Introspect
 
 public struct NavPush {
     let navigation: UINavigationController?
+    let uiViewController: UIViewController
 
     init(_ uiViewController: UIViewController) {
+        self.uiViewController = uiViewController
         navigation = uiViewController.navigationController
     }
 
     public func push<Content: View>(content: () -> (Content)) {
         navigation?.pushViewController(UIHostingController(rootView: content()), animated: true)
+    }
+
+    public func isLastView() -> Bool {
+        return navigation?.viewControllers.last == uiViewController
     }
 }
 
